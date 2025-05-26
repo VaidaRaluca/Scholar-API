@@ -23,5 +23,16 @@ namespace Scholar.Core.Dtos
             if (dateOfBirth.Date > today.AddYears(-age)) age--;
             return age;
         }
+
+        public double AverageGrade => CalculateAverageGrade(Grades);
+
+        private double CalculateAverageGrade(List<GradeDto> grades)
+        {
+            if (grades == null || grades.Count == 0)
+                return 0;
+
+            return (double)Math.Round(grades.Average(g => g.Value));
+        }
+
     }
 }
