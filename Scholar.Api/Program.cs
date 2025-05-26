@@ -7,10 +7,26 @@ using Microsoft.OpenApi.Models;
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+// added this 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        policy => policy
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+});
+
+
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<ScholarDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        sqlOptions => sqlOptions.MigrationsAssembly("Scholar.Database")
+    ));
+
 
 builder.Services.AddScoped<IStudentRepo, StudentRepo>(); builder.Services.AddScoped<IStudentRepo, StudentRepo>();
 builder.Services.AddScoped<IGradeRepo, GradeRepo>(); builder.Services.AddScoped<IGradeRepo, GradeRepo>();
@@ -39,6 +55,9 @@ if(app.Environment.IsDevelopment())
         c.RoutePrefix = string.Empty;
     });
 }
+
+// here
+app.UseCors("AllowAll");
 
 app.UseHttpsRedirection();
 

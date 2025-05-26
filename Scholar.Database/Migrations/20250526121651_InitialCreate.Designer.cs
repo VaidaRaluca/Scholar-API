@@ -12,7 +12,7 @@ using Scholar.Database.Context;
 namespace Scholar.Database.Migrations
 {
     [DbContext(typeof(ScholarDbContext))]
-    [Migration("20250506081337_InitialCreate")]
+    [Migration("20250526121651_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
