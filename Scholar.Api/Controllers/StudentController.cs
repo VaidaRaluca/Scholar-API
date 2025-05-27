@@ -68,6 +68,22 @@ namespace Scholar.Api.Controllers
             return Ok(paged);
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] StudentDto updatedStudent)
+        {
+            if (id != updatedStudent.Id)
+                return BadRequest("ID in URL does not match ID in body.");
+
+            var existing = await studentService.GetStudentByIdWithGradesAsync(id);
+            if (existing == null)
+                return NotFound();
+
+            var success = await studentService.UpdateStudentAsync(updatedStudent);
+            if (!success)
+                return StatusCode(500, "Could not update the student.");
+
+            return NoContent(); 
+        }
 
 
     }

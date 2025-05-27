@@ -12,5 +12,7 @@ namespace Scholar.Core.Interfaces
     {
         Task<IEnumerable<StudentDto>> GetAllStudentsWithGradesAsync();
         Task<StudentDto> GetStudentByIdWithGradesAsync(int id);
+        Task<bool> UpdateStudentAsync(StudentDto updatedStudent);
+
     }
 }

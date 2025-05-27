@@ -32,5 +32,10 @@ namespace Scholar.Database.Repos
                 .Include(s => s.Grades)
                 .FirstOrDefaultAsync(s => s.Id == id);
         }
+
+        public async Task SaveChangesAsync()
+        {
+            await this.context.SaveChangesAsync();
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Scholar.Core.Dtos;
+﻿using Microsoft.EntityFrameworkCore;
+using Scholar.Core.Dtos;
 using Scholar.Core.Entities;
 using Scholar.Core.Interfaces;
 using Scholar.Database.Repos;
@@ -49,5 +50,21 @@ namespace Scholar.Database.Services
                 }).ToList() ?? new List<GradeDto>()
             };
         }
+
+        public async Task<bool> UpdateStudentAsync(StudentDto dto)
+        {
+            var student = await this.studentRepo.GetStudentByIdWithGradesAsync(dto.Id);
+            if (student == null)
+                return false;
+
+            // Update student fields
+            student.FirstName = dto.FirstName;
+            student.LastName = dto.LastName;
+            student.Birthday = dto.Birthday;
+            await this.studentRepo.SaveChangesAsync();
+            return true;
+        }
+
+
     }
 }
