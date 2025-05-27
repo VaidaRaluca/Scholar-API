@@ -11,5 +11,7 @@ namespace Scholar.Core.Interfaces
     {
         Task<IEnumerable<Student>> GetAllStudentsWithGradesAsync();
         Task<Student> GetStudentByIdWithGradesAsync(int id);
+
+        Task SaveChangesAsync();
     }
 }
